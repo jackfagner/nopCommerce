@@ -91,18 +91,18 @@ namespace Nop.Web.Framework.Security.Captcha
                     var form = $('input[id=""g-recaptcha-response_{id}""]').closest('form');
                     var btn = $(form.find(':submit')[0]);
 
-                    form.append($('<input/>').attr('name', btn.attr('name')).attr('type', 'hidden').val(btn.val()));
-
+                    var loaded = false;
                     var isBusy = false;
                     btn.on('click', function (e) {{
                         if (!isBusy) {{
-                            e.preventDefault();
                             isBusy = true;
                             grecaptcha.execute('{publicKey}', {{ 'action': '{actionName}' }}).then(function(token) {{
                                 $('#g-recaptcha-response_{id}', form).val(token);
-                                form.submit();
+                                loaded = true;
+                                btn.click();
                             }});
                         }}
+                        return loaded;
                     }});
                 }}
             ";
