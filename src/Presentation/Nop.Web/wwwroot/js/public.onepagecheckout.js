@@ -17,10 +17,10 @@ var Checkout = {
     ajaxFailure: function () {
         location.href = Checkout.failureUrl;
     },
-    
+
     _disableEnableAll: function (element, isDisabled) {
         var descendants = element.find('*');
-        $(descendants).each(function() {
+        $(descendants).each(function () {
             if (isDisabled) {
                 $(this).prop("disabled", true);
             } else {
@@ -36,7 +36,7 @@ var Checkout = {
     },
 
     setLoadWaiting: function (step, keepDisabled) {
-      var container;
+        var container;
         if (step) {
             if (this.loadWaiting) {
                 this.setLoadWaiting(false);
@@ -81,7 +81,7 @@ var Checkout = {
                 $('#opc-' + e).addClass('allow');
             });
         }
-        
+
         //TODO move it to a new method
         if ($("#billing-address-select").length > 0) {
             Billing.newAddress(!$('#billing-address-select').val());
@@ -132,14 +132,14 @@ var Billing = {
         if (selectElement) {
             selectElement.val('');
         }
-        $(document).trigger({ type: "onepagecheckout_billing_address_reset" }); 
+        $(document).trigger({ type: "onepagecheckout_billing_address_reset" });
     },
 
     save: function () {
         if (Checkout.loadWaiting !== false) return;
 
         Checkout.setLoadWaiting('billing');
-        
+
         $.ajax({
             cache: false,
             url: this.saveUrl,
@@ -183,7 +183,7 @@ var Billing = {
         Checkout.setStepResponse(response);
         Billing.initializeCountrySelect();
     },
-    
+
     initializeCountrySelect: function () {
         if ($('#opc-billing').has('select[data-trigger="country-select"]')) {
             $('#opc-billing select[data-trigger="country-select"]').countrySelect();
@@ -216,12 +216,12 @@ var Shipping = {
     togglePickupInStore: function (pickupInStoreInput) {
         if (pickupInStoreInput.checked) {
             $('#pickup-points-form').show();
-            $('#shipping-addresses-form').hide();
         }
         else {
             $('#pickup-points-form').hide();
-            $('#shipping-addresses-form').show();
         }
+
+        $(document).trigger({ type: "onepagecheckout_toggle_pickup_in_store", checked: pickupInStoreInput.checked });
     },
 
     resetSelectedAddress: function () {
@@ -293,7 +293,7 @@ var ShippingMethod = {
             return false;
         }
 
-        for (var i = 0; i< methods.length; i++) {
+        for (var i = 0; i < methods.length; i++) {
             if (methods[i].checked) {
                 return true;
             }
@@ -301,13 +301,13 @@ var ShippingMethod = {
         alert(this.localized_data.SpecifyMethodError);
         return false;
     },
-    
+
     save: function () {
         if (Checkout.loadWaiting !== false) return;
-        
+
         if (this.validate()) {
             Checkout.setLoadWaiting('shipping-method');
-        
+
             $.ajax({
                 cache: false,
                 url: this.saveUrl,
@@ -367,7 +367,7 @@ var PaymentMethod = {
             alert(this.localized_data.NotAvailableMethodsError);
             return false;
         }
-        
+
         for (var i = 0; i < methods.length; i++) {
             if (methods[i].checked) {
                 return true;
@@ -376,10 +376,10 @@ var PaymentMethod = {
         alert(this.localized_data.SpecifyMethodError);
         return false;
     },
-    
+
     save: function () {
         if (Checkout.loadWaiting !== false) return;
-        
+
         if (this.validate()) {
             Checkout.setLoadWaiting('payment-method');
             $.ajax({
@@ -426,7 +426,7 @@ var PaymentInfo = {
 
     save: function () {
         if (Checkout.loadWaiting !== false) return;
-        
+
         Checkout.setLoadWaiting('payment-info');
         $.ajax({
             cache: false,
@@ -472,7 +472,7 @@ var ConfirmOrder = {
 
     save: function () {
         if (Checkout.loadWaiting !== false) return;
-        
+
         //terms of service
         var termOfServiceOk = true;
         if ($('#termsofservice').length > 0) {
@@ -498,7 +498,7 @@ var ConfirmOrder = {
             return false;
         }
     },
-    
+
     resetLoadWaiting: function (transport) {
         Checkout.setLoadWaiting(false, ConfirmOrder.isSuccess);
     },
@@ -513,7 +513,7 @@ var ConfirmOrder = {
 
             return false;
         }
-        
+
         if (response.redirect) {
             ConfirmOrder.isSuccess = true;
             location.href = response.redirect;
