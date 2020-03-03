@@ -54,6 +54,7 @@ using Nop.Services.Themes;
 using Nop.Services.Topics;
 using Nop.Services.Vendors;
 using Nop.Web.Framework.Mvc.Routing;
+using Nop.Web.Framework.Seo;
 using Nop.Web.Framework.Themes;
 using Nop.Web.Framework.UI;
 
@@ -94,6 +95,8 @@ namespace Nop.Web.Framework.Infrastructure
 
             //cache manager
             builder.RegisterType<PerRequestCacheManager>().As<ICacheManager>().InstancePerLifetimeScope();
+
+            builder.RegisterType<GenericRouteTransformer>().AsSelf().SingleInstance();
 
             //redis connection wrapper
             if (config.RedisEnabled)

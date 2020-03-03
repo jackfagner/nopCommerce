@@ -344,7 +344,7 @@ namespace Nop.Services.Localization
                     result = lsr;
             }
 
-            if (!string.IsNullOrEmpty(result)) 
+            if (!string.IsNullOrEmpty(result))
                 return result;
 
             if (logIfNotFound)
@@ -486,7 +486,7 @@ namespace Nop.Services.Localization
             }
 
             //set default value if required
-            if (!string.IsNullOrEmpty(resultStr) || !returnDefaultValue) 
+            if (!string.IsNullOrEmpty(resultStr) || !returnDefaultValue)
                 return result;
             var localizer = keySelector.Compile();
             result = localizer(entity);

@@ -4199,7 +4199,7 @@ namespace Nop.Services.Installation
             if (crRegistered == null)
                 throw new ArgumentNullException(nameof(crRegistered));
 
-            //default store 
+            //default store
             var defaultStore = _storeRepository.Table.FirstOrDefault();
 
             if (defaultStore == null)
@@ -4516,7 +4516,7 @@ namespace Nop.Services.Installation
             };
             _customerRoleRepository.Insert(customerRoles);
 
-            //default store 
+            //default store
             var defaultStore = _storeRepository.Table.FirstOrDefault();
 
             if (defaultStore == null)
